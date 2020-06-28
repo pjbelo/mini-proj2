@@ -184,12 +184,14 @@ window.onload = function () {
     const sponsors = await response.json();
 
     for (const sponsor of sponsors) {
-      txtSponsors += `
-    <div class="col-md-3 col-sm-6">
-      <a href="#" target="_blank">
-        <img class="img-fluid d-block mx-auto" src="${sponsor.logo}" alt="${sponsor.nome}">
-      </a>
-    </div>`;
+      if (sponsor.active == "1") {
+        txtSponsors += `
+        <div class="col-md-3 col-sm-6">
+          <a href="#" target="_blank">
+            <img class="img-fluid d-block mx-auto" src="${sponsor.logo}" alt="${sponsor.nome}">
+          </a>
+        </div>`;
+      }
     }
     renderSponsors.innerHTML = txtSponsors;
   })();
