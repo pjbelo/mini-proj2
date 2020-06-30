@@ -10,7 +10,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>WebConference Admin - Voluntários</title>
+    <title>WebConference Admin - Membros CC</title>
 
     <!-- Bootstrap CSS -->
     <link
@@ -51,16 +51,16 @@
         <li class="nav-item">
           <a class="nav-link" href="participants.html">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Participantes</span>
-            </a>
+            <span>Participantes</span></a
+          >
         </li>
         <li class="nav-item">
           <a class="nav-link" href="speakers.html">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Oradores</span>
-            </a>
+            <span>Oradores</span></a
+          >
         </li>
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="volunteers.html">
             <i class="fas fa-fw fa-users"></i>
             <span>Voluntários</span>
@@ -75,10 +75,10 @@
         <li class="nav-item">
           <a class="nav-link" href="sponsors.html">
             <i class="fas fa-fw fa-table"></i>
-            <span>Sponsors</span>
-          </a>
+            <span>Sponsors</span></a
+          >
         </li>
-        <li class="nav-item">
+        <li class="nav-item active">
           <a class="nav-link" href="tasks.html">
             <i class="fas fa-fw fa-table"></i>
             <span>Tarefas</span>
@@ -86,79 +86,96 @@
         </li>
       </ul>
 
-      <!-- ### Formulário ### -->
       <div id="content-wrapper">
         <div class="container-fluid">
           <div class="jumbotron">
-            <h1 class="display-3">Voluntários</h1>
-            <p class="lead">Gestão de Voluntários na WebConference</p>
+            <h1 class="display-3">Tarefas</h1>
+            <p class="lead">
+              Gestão de Tarefas na WebConference
+            </p>
             <hr class="my-2" />
-            <form id="frmVolunteer">
-              <input type="hidden" id="txtVolunteerId" />
+            <form id="frmTask">
+              <input type="hidden" id="txtTaskId" />
 
               <div class="row">
                 <div class="form-group col">
-                  <label for="inputName">Nome</label>
+                  <label for="inputName">Tarefa</label>
                   <input
                     type="text"
-                    placeholder="nome"
+                    placeholder="Nome da tarefa"
                     class="form-control"
-                    id="txtName"
+                    id="txtTask"
                     required
                   />
                 </div>
                 <div class="form-group col">
-                  <label for="inputName">Cargo</label>
-                  <input
-                    type="text"
-                    placeholder="cargo"
-                    class="form-control"
-                    id="txtJob"
-                    required
-                  />
+                  <label for="txtStatus">Estado</label>
+                  <select class="form-control" id="txtStatus">
+                    <option>Por iniciar</option>
+                    <option>Iniciada</option>
+                    <option>Terminada</option>
+                    <option>Cancelada</option>
+                    <option>Suspensa</option>
+                  </select>                  
                 </div>
               </div>
-
-              <div class="row">
-                <div class="form-group col">
-                  <label for="inputName">Telefone</label>
-                  <input
-                    type="text"
-                    placeholder="telefone"
-                    class="form-control"
-                    id="txtPhone"
-                    required
-                  />
-                </div>
-                <div class="form-group col">
-                  <label for="inputName">e-mail</label>
-                  <input
-                    type="text"
-                    placeholder="email"
-                    class="form-control"
-                    id="txtEmail"
-                    required
-                  />
-                </div>
-              </div>
-
               <div class="form-group">
-                <label for="inputPhoto">Foto</label>
+                <label for="txtVolunteer">Alocada a</label>
                 <input
                   type="url"
-                  placeholder="foto"
+                  placeholder="Nome do voluntário"
                   class="form-control"
-                  value="http://xxx.pt"
-                  id="txtPhoto"
+                  id="txtVolunteer"
                   required
                 />
               </div>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="txtStartDate">Inicio</label>
+                  <input
+                    type="date"
+                    placeholder="facebook"
+                    class="form-control"
+                    id="txtStartDate"
+                  />
+                </div>
+                <div class="form-group col">
+                  <label for="txtEndDate">Fim</label>
+                  <input
+                    type="date"
+                    placeholder="twitter"
+                    class="form-control"
+                    id="txtEndDate"
+                  />
+                </div>
 
+                <div class="form-group col">
+                  <label for="txtDuration">Duração</label>
+                  <input
+                    type="number"
+                    step="0.5"
+                    min="0"
+                    placeholder="horas"
+                    class="form-control"
+                    id="txtDuration"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="txtDescription">Descrição</label>
+                <textarea
+                  id="txtDescription"
+                  placeholder="Descrição da tarefa a realizar"
+                  class="form-control"
+                  cols="30"
+                  rows="5"
+                ></textarea>
+              </div>
               <!-- Buttons-->
               <div class="form-row">
                 <div class="form-group col-md-12">
                   <button type="submit" class="btn btn-primary mb-2">
-                    Guardar Voluntário
+                    Submeter
                   </button>
                   <button type="reset" class="btn btn-primary mb-2">
                     Limpar valores
@@ -167,13 +184,17 @@
               </div>
             </form>
 
-            <!--################## Voluntários ###################-->
-            <div id="divVolunteers" class="container">
+            <!--################## Lista de Tarefas ###################-->
+            <div id="divTasks" class="container">
               <!-- Table -->
               <div class="table-responsive">
-                <table id="tblVolunteers" class="table table-sm"></table>
+                <div class="text-center bg-warning font-weight-bold">Lista de Tarefas</div>
+                <table id="tblTasks" class="table table-sm">
+                  <!-- conteúdo definido através de javascript-->
+                </table>
               </div>
             </div>
+
           </div>
         </div>
         <!-- /.container-fluid -->
@@ -217,6 +238,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.26.9/sweetalert2.all.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="volunteers.js"></script>
+    <script src="tasks.js"></script>
   </body>
 </html>
