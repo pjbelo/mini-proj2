@@ -1,5 +1,5 @@
 window.onload = function () {
-  const urlBase = "https://fcawebbook.herokuapp.com";
+  const urlBase = "https://mini-proj3-pjbelo.herokuapp.com/";
 
   const btnLogin = document.getElementById("btnLogin");
   const btnRegister = document.getElementById("btnRegister");

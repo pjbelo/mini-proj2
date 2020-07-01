@@ -1,4 +1,4 @@
-const urlBase = "https://fcawebbook.herokuapp.com";
+const urlBase = "https://mini-proj3-pjbelo.herokuapp.com/";
 let isNew = true;
 
 window.onload = () => {
