@@ -1,4 +1,4 @@
-const urlBase = "https://mini-proj3-pjbelo.herokuapp.com/";
+const urlBase = "https://mini-proj3-pjbelo.herokuapp.com";
 
 window.onload = () => {
   // References to HTML objects
