@@ -64,7 +64,7 @@ window.onload = () => {
                     <th class='w-2'>#</th>
                     <th class='w-50'>Nome</th>
                     <th class='w-38'>Cargo</th>              
-                    <th class='w-10'>Foto</th>              
+                    <th class='w-10 text-center'>Editar | Apagar</th>              
                 </tr> 
             </thead><tbody>
         `;
@@ -103,8 +103,8 @@ window.onload = () => {
                     <td>${i}</td>
                     <td>${ccmember.nome}</td>
                     <td>${ccmember.cargo}</td>
-                    <td>
-                        <i id='${ccmember.idCcmember}' class='fas fa-edit edit'></i>
+                    <td class="text-center">
+                        <i id='${ccmember.idCcmember}' class='fas fa-edit edit'></i> | 
                         <i id='${ccmember.idCcmember}' class='fas fa-trash-alt remove'></i>
                     </td>
                 </tr>
