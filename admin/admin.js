@@ -1,4 +1,6 @@
-const urlBase = "https://mini-proj3-pjbelo.herokuapp.com";
+const urlProd = "https://mini-proj3-pjbelo.herokuapp.com";
+const urlDev = "http://localhost:8080";
+const urlBase = urlDev;
 
 window.onload = () => {
   // References to HTML objects
