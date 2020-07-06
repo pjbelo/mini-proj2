@@ -7,6 +7,7 @@ window.onload = () => {
   // References to HTML objects
   const tblSpeakers = document.getElementById("tblSpeakers");
   const frmSpeaker = document.getElementById("frmSpeaker");
+  console.log("isNew", isNew);
 
   frmSpeaker.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -23,6 +24,7 @@ window.onload = () => {
     let response;
     if (isNew) {
       // Adiciona Orador
+      console.log("Criar orador");
       response = await fetch(`${urlBase}/speakers`, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -43,6 +45,7 @@ window.onload = () => {
       const newSpeaker2 = await response2.json();
     } else {
       // Atualiza Orador
+      console.log("Atualizar orador");
       response = await fetch(`${urlBase}/speakers/${txtSpeakerId}`, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
