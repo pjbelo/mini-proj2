@@ -2,6 +2,7 @@ const urlProd = "https://mini-proj3-pjbelo.herokuapp.com";
 const urlDev = "http://localhost:8080";
 const urlBase = urlDev;
 let isNew = true;
+document.getElementById("btn_submit").innerText = "Criar Voluntário";
 
 window.onload = () => {
   // References to HTML objects
@@ -12,23 +13,22 @@ window.onload = () => {
     event.preventDefault();
     const txtName = document.getElementById("txtName").value;
     const txtJob = document.getElementById("txtJob").value;
+    const txtPhone = document.getElementById("txtPhone").value;
+    const txtEmail = document.getElementById("txtEmail").value;
     const txtPhoto = document.getElementById("txtPhoto").value;
-    const txtFacebook = document.getElementById("txtFacebook").value;
-    const txtTwitter = document.getElementById("txtTwitter").value;
-    const txtLinkedin = document.getElementById("txtLinkedin").value;
-    const txtBio = document.getElementById("txtBio").value;
     const txtVolunteerId = document.getElementById("txtVolunteerId").value;
 
     // Verifica flag isNew para saber se se trata de uma adição ou de um atualização dos dados de um voluntário
     let response;
     if (isNew) {
       // Adiciona Voluntário
+      console.log("Create Volunteer");
       response = await fetch(`${urlBase}/volunteers`, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         method: "POST",
-        body: `nome=${txtName}&cargo=${txtJob}&foto=${txtPhoto}&facebook=${txtFacebook}&twitter=${txtTwitter}&linkedin=${txtLinkedin}&bio=${txtBio}&active=1`,
+        body: `name=${txtName}&job=${txtJob}&phone=${txtPhone}&email=${txtEmail}&photo=${txtPhoto}`,
       });
       const newVolunteerId = response.headers.get("Location");
       const newVolunteer = await response.json();
@@ -48,7 +48,7 @@ window.onload = () => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         method: "PUT",
-        body: `nome=${txtName}&cargo=${txtJob}&foto=${txtPhoto}&facebook=${txtFacebook}&twitter=${txtTwitter}&linkedin=${txtLinkedin}&bio=${txtBio}&active=1`,
+        body: `name=${txtName}&job=${txtJob}&phone=${txtPhone}&email=${txtEmail}&photo=${txtPhoto}`,
       });
 
       const newVolunteer = await response.json();
@@ -70,9 +70,10 @@ window.onload = () => {
                 </tr> 
             </thead><tbody>
         `;
-    //const response = await fetch(`${urlBase}/conferences/1/volunteers`)
-    //const volunteers = await response.json()
+    const response = await fetch(`${urlBase}/conferences/1/volunteers`);
+    const volunteers = await response.json();
 
+    /*
     const volunteers = [
       {
         idVolunteer: 1,
@@ -91,6 +92,7 @@ window.onload = () => {
         photo: "http://pics.com/24323",
       },
     ];
+    */
 
     let i = 1;
     for (const volunteer of volunteers) {
@@ -100,8 +102,8 @@ window.onload = () => {
                     <td>${volunteer.name}</td>
                     <td>${volunteer.job}</td>
                     <td class="text-center">
-                        <i id='${volunteer.idVolunteer}' class='fas fa-edit edit'></i> | 
-                        <i id='${volunteer.idVolunteer}' class='fas fa-trash-alt remove'></i>
+                        <i id='${volunteer.volunteer_id}' class='fas fa-edit edit'></i> | 
+                        <i id='${volunteer.volunteer_id}' class='fas fa-trash-alt remove'></i>
                     </td>
                 </tr>
             `;
@@ -115,10 +117,12 @@ window.onload = () => {
     for (let i = 0; i < btnEdit.length; i++) {
       btnEdit[i].addEventListener("click", () => {
         isNew = false;
+        document.getElementById("btn_submit").innerText =
+          "Atualizar Voluntário";
         for (const volunteer of volunteers) {
-          if (volunteer.idVolunteer == btnEdit[i].getAttribute("id")) {
+          if (volunteer.volunteer_id == btnEdit[i].getAttribute("id")) {
             document.getElementById("txtVolunteerId").value =
-              volunteer.idVolunteer;
+              volunteer.volunteer_id;
             document.getElementById("txtName").value = volunteer.name;
             document.getElementById("txtJob").value = volunteer.job;
             document.getElementById("txtPhone").value = volunteer.phone;

@@ -52,13 +52,13 @@
           <a class="nav-link" href="participants.html">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Participantes</span>
-            </a>
+          </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="speakers.html">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Oradores</span>
-            </a>
+          </a>
         </li>
         <li class="nav-item active">
           <a class="nav-link" href="volunteers.html">
@@ -93,9 +93,9 @@
             <h1 class="display-3">Voluntários</h1>
             <p class="lead">Gestão de Voluntários na WebConference</p>
             <hr class="my-2" />
+
             <form id="frmVolunteer">
               <input type="hidden" id="txtVolunteerId" />
-
               <div class="row">
                 <div class="form-group col">
                   <label for="inputName">Nome</label>
@@ -118,7 +118,6 @@
                   />
                 </div>
               </div>
-
               <div class="row">
                 <div class="form-group col">
                   <label for="inputName">Telefone</label>
@@ -127,37 +126,36 @@
                     placeholder="telefone"
                     class="form-control"
                     id="txtPhone"
-                    required
                   />
                 </div>
                 <div class="form-group col">
                   <label for="inputName">e-mail</label>
                   <input
-                    type="text"
+                    type="email"
                     placeholder="email"
                     class="form-control"
                     id="txtEmail"
-                    required
                   />
                 </div>
               </div>
-
               <div class="form-group">
                 <label for="inputPhoto">Foto</label>
                 <input
                   type="url"
-                  placeholder="foto"
+                  placeholder="http://www.abc.pt"
                   class="form-control"
-                  value="http://xxx.pt"
                   id="txtPhoto"
-                  required
                 />
               </div>
 
               <!-- Buttons-->
               <div class="form-row">
                 <div class="form-group col-md-12">
-                  <button type="submit" class="btn btn-primary mb-2">
+                  <button
+                    id="btn_submit"
+                    type="submit"
+                    class="btn btn-primary mb-2"
+                  >
                     Guardar Voluntário
                   </button>
                   <button type="reset" class="btn btn-primary mb-2">
