@@ -55,6 +55,8 @@ window.onload = () => {
       const newVolunteer = await response.json();
     }
     isNew = true;
+    document.getElementById("btn_submit").innerText =
+    "Criar Voluntário";
     renderVolunteers();
   });
 
