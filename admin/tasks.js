@@ -3,10 +3,15 @@ const urlDev = "http://localhost:8080";
 const urlBase = urlDev;
 let isNew = true;
 
+// DB table
+// tasks: task_id, conference_id, taskname, status, volunteer_id, start_date, end_date, duration, description
+
+
 window.onload = () => {
   // References to HTML objects
   const tblTasks = document.getElementById("tblTasks");
   const frmTask = document.getElementById("frmTask");
+  console.log("isNew:", isNew);
 
   frmTask.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -22,25 +27,14 @@ window.onload = () => {
     // Verifica flag isNew para saber se se trata de uma adição ou de um atualização dos dados de um membro
     let response;
     if (isNew) {
-      // Adiciona Membro
-      response = await fetch(`${urlBase}/tasks`, {
+      // Adiciona Task
+      response = await fetch(`${urlBase}/conferences/1/tasks`, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         method: "POST",
-        body: `task=${txtTask}&status=${txtStatus}&volunteer=${txtVolunteer}&startDate=${txtStartDate}&endDate=${txtEndDate}&duration=${txtDuration}&description=${txtDescription}&active=1`,
+        body: `task_name=${txtTask}&status=${txtStatus}&volunteer=${txtVolunteer}&startDate=${txtStartDate}&endDate=${txtEndDate}&duration=${txtDuration}&description=${txtDescription}`,
       });
-      const newTaskId = response.headers.get("Location");
-      const newTask = await response.json();
-      // Associa membro à conferência WebConfernce
-      const newUrl = `${urlBase}/conferences/1/tasks/${newTaskId}`;
-      const response2 = await fetch(newUrl, {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        method: "POST",
-      });
-      const newTask2 = await response2.json();
     } else {
       // Atualiza Membro
       response = await fetch(`${urlBase}/tasks/${txtTaskId}`, {
@@ -48,7 +42,7 @@ window.onload = () => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         method: "PUT",
-        body: `task=${txtTask}&status=${txtStatus}&volunteer=${txtVolunteer}&startDate=${txtStartDate}&endDate=${txtEndDate}&duration=${txtDuration}&description=${txtDescription}&active=1`,
+        body: `task_name=${txtTask}&status=${txtStatus}&volunteer=${txtVolunteer}&startDate=${txtStartDate}&endDate=${txtEndDate}&duration=${txtDuration}&description=${txtDescription}`,
       });
 
       const newTask = await response.json();
@@ -74,9 +68,10 @@ window.onload = () => {
         `;
 
     // para ligar ao backoffice
-    // const response = await fetch(`${urlBase}/conferences/1/tasks`);
-    // const tasks = await response.json();
+    const response = await fetch(`${urlBase}/conferences/1/tasks`);
+    const tasks = await response.json();
 
+    /*
     const tasks = [
       {
         idTask: 1,
@@ -99,19 +94,20 @@ window.onload = () => {
         description: "Dar apoio aos apresentadores",
       },
     ];
+    */
 
     let i = 1;
     for (const task of tasks) {
       strHtml += `
                 <tr>
                     <td>${i}</td>
-                    <td>${task.task}</td>
+                    <td>${task.task_name}</td>
                     <td>${task.volunteer}</td>
                     <td>${task.startDate}</td>
                     <td>${task.status}</td>
                     <td class="text-center">
-                        <i id='${task.idTask}' class='fas fa-edit edit'></i> |
-                        <i id='${task.idTask}' class='fas fa-trash-alt remove'></i>
+                        <i id='${task.task_id}' class='fas fa-edit edit'></i> |
+                        <i id='${task.task_id}' class='fas fa-trash-alt remove'></i>
                     </td>
                 </tr>
             `;
@@ -127,9 +123,9 @@ window.onload = () => {
         isNew = false;
 
         for (const task of tasks) {
-          if (task.idTask == btnEdit[i].getAttribute("id")) {
-            document.getElementById("txtTaskId").value = task.idTask;
-            document.getElementById("txtTask").value = task.task;
+          if (task.task_id == btnEdit[i].getAttribute("id")) {
+            document.getElementById("txtTaskId").value = task.task_id;
+            document.getElementById("txtTask").value = task.task_name;
             document.getElementById("txtStatus").value = task.status;
             document.getElementById("txtVolunteer").value = task.volunteer;
             document.getElementById("txtStartDate").value = task.startDate;
@@ -159,7 +155,7 @@ window.onload = () => {
             let taskId = btnDelete[i].getAttribute("id");
             try {
               const response = await fetch(
-                `${urlBase}/conferences/1/tasks/${taskId}`,
+                `${urlBase}/tasks/${taskId}`,
                 {
                   method: "DELETE",
                 }
