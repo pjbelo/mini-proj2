@@ -2,7 +2,6 @@ const urlProd = "https://mini-proj3-pjbelo.herokuapp.com";
 const urlDev = "http://localhost:8080";
 const urlBase = urlDev;
 let isNew = true;
-document.getElementById("btn_submit").innerText = "Criar Voluntário";
 
 window.onload = () => {
   // References to HTML objects
@@ -31,6 +30,7 @@ window.onload = () => {
         body: `name=${txtName}&job=${txtJob}&phone=${txtPhone}&email=${txtEmail}&photo=${txtPhoto}`,
       });
       const newVolunteerId = response.headers.get("Location");
+      console.log(response);
       const newVolunteer = await response.json();
       // Associa voluntário à conferência WebConfernce
       const newUrl = `${urlBase}/conferences/1/volunteers/${newVolunteerId}`;
@@ -41,6 +41,7 @@ window.onload = () => {
         method: "POST",
       });
       const newVolunteer2 = await response2.json();
+      console.log(response2);
     } else {
       // Atualiza Voluntário
       response = await fetch(`${urlBase}/volunteers/${txtVolunteerId}`, {
