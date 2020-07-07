@@ -3,6 +3,10 @@ const urlDev = "http://localhost:8080";
 const urlBase = urlDev;
 let isNew = true;
 
+// DB tables
+// sponsor : idSponsor, nome, logo, categoria, active, link
+// conf_sponsor : idConference, idSponsor
+
 window.onload = () => {
   // References to HTML objects
   const tblSponsors = document.getElementById("tblSponsors");
@@ -11,12 +15,10 @@ window.onload = () => {
   frmSponsor.addEventListener("submit", async (event) => {
     event.preventDefault();
     const txtName = document.getElementById("txtName").value;
-    const txtJob = document.getElementById("txtJob").value;
-    const txtPhoto = document.getElementById("txtPhoto").value;
-    const txtFacebook = document.getElementById("txtFacebook").value;
-    const txtTwitter = document.getElementById("txtTwitter").value;
-    const txtLinkedin = document.getElementById("txtLinkedin").value;
-    const txtBio = document.getElementById("txtBio").value;
+    const txtLogo = document.getElementById("txtLogo").value;
+    const txtCategory = document.getElementById("txtCategory").value;
+    const txtLink = document.getElementById("txtLink").value;
+    const txtActive = document.getElementById("txtActive").value;
     const txtSponsorId = document.getElementById("txtSponsorId").value;
 
     // Verifica flag isNew para saber se se trata de uma adição ou de um atualização dos dados de um patrocinador
@@ -28,7 +30,7 @@ window.onload = () => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         method: "POST",
-        body: `nome=${txtName}&cargo=${txtJob}&foto=${txtPhoto}&facebook=${txtFacebook}&twitter=${txtTwitter}&linkedin=${txtLinkedin}&bio=${txtBio}&active=1`,
+        body: `nome=${txtName}&logo=${txtLogo}&categoria=${txtCategory}&link=${txtLink}&active=${txtActive}`,
       });
       const newSponsorId = response.headers.get("Location");
       const newSponsor = await response.json();
@@ -48,7 +50,7 @@ window.onload = () => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         method: "PUT",
-        body: `nome=${txtName}&cargo=${txtJob}&foto=${txtPhoto}&facebook=${txtFacebook}&twitter=${txtTwitter}&linkedin=${txtLinkedin}&bio=${txtBio}&active=1`,
+        body: `nome=${txtName}&logo=${txtLogo}&categoria=${txtCategory}&link=${txtLink}&active=${txtActive}`,
       });
 
       const newSponsor = await response.json();

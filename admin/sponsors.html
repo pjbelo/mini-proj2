@@ -92,9 +92,9 @@
             <h1 class="display-3">Patrocinadores</h1>
             <p class="lead">Gestão de Patrocinadores na WebConference</p>
             <hr class="my-2" />
+
             <form id="frmSponsor">
               <input type="hidden" id="txtSponsorId" />
-
               <div class="row">
                 <div class="form-group col">
                   <label for="inputName">Nome</label>
@@ -113,7 +113,6 @@
                     placeholder="http://pics.com/21323"
                     class="form-control"
                     id="txtLogo"
-                    required
                   />
                 </div>
               </div>
@@ -126,7 +125,6 @@
                     placeholder="nome"
                     class="form-control"
                     id="txtCategory"
-                    required
                   />
                 </div>
                 <div class="form-group col">
@@ -139,17 +137,12 @@
                   />
                 </div>
               </div>
-
-              <div class="form-group">
-                <label class="form-label" for="txtActive">
-                  Ativo
-                </label>
-                <input
-                  class="form-input col-1"
-                  type="text"
-                  id="txtActive"
-                  placeholder="0 ou 1"
-                />
+              <div class="form-group col">
+                <label for="txtActive">Ativo</label>
+                <select class="form-control col-2" id="txtActive">
+                  <option>1</option>
+                  <option>0</option>
+                </select>                  
               </div>
 
               <!-- Buttons-->
