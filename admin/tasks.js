@@ -1,22 +1,52 @@
 const urlProd = "https://mini-proj3-pjbelo.herokuapp.com";
 const urlDev = "http://localhost:8080";
 const urlBase = urlDev;
+let selectedVolunteerID;
 let isNew = true;
 
 // DB table
 // tasks: task_id, conference_id, taskname, status, volunteer_id, start_date, end_date, duration, description
 
-
 window.onload = () => {
   // References to HTML objects
   const tblTasks = document.getElementById("tblTasks");
   const frmTask = document.getElementById("frmTask");
+
+  async function readVolunteers() {
+    const response = await fetch(`${urlBase}/conferences/1/volunteers`);
+    const volunteers = await response.json();
+    // populate sel_volunteer select input
+    var ele = document.getElementById("txtVolunteer");
+    for (const volunteer of volunteers) {
+      ele.innerHTML =
+        ele.innerHTML +
+        '<option value="' +
+        volunteer.volunteer_id +
+        '">' +
+        volunteer.name +
+        "</option>";
+    }
+  }
+  readVolunteers().catch((e) => {
+    console.log("There has been a problem reading volunteers: " + e.message);
+  });
+
   console.log("isNew:", isNew);
+
+  /*
+  const txtVolunteerEl = document.getElementById("sel_volunteer");
+  function readSelectedVolunteer() {
+    selectedVolunteerID = txtVolunteerEl.value;
+    console.log(selectedVolunteerID);
+  }
+
+  txtVolunteerEl.addEventListener("onchange", readSelectedVolunteer);
+  */
 
   frmTask.addEventListener("submit", async (event) => {
     event.preventDefault();
     const txtTask = document.getElementById("txtTask").value;
-    const txtStatus = document.getElementById("txtStatus").value;
+    const txtStatus = document.getElementById("txtStatus").innertText;
     const txtVolunteer = document.getElementById("txtVolunteer").value;
     const txtStartDate = document.getElementById("txtStartDate").value;
     const txtEndDate = document.getElementById("txtEndDate").value;
@@ -154,12 +184,9 @@ window.onload = () => {
           if (result.value) {
             let taskId = btnDelete[i].getAttribute("id");
             try {
-              const response = await fetch(
-                `${urlBase}/tasks/${taskId}`,
-                {
-                  method: "DELETE",
-                }
-              );
+              const response = await fetch(`${urlBase}/tasks/${taskId}`, {
+                method: "DELETE",
+              });
               if (response.status == 204) {
                 swal(
                   "Removido!",

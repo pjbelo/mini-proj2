@@ -116,34 +116,32 @@
                     <option>Terminada</option>
                     <option>Cancelada</option>
                     <option>Suspensa</option>
-                  </select>                  
+                  </select>
                 </div>
               </div>
               <div class="form-group">
                 <label for="txtVolunteer">Alocada a</label>
+                <select id="txtVolunteer" class="form-control" )>
+                  <option value="">Selecione um voluntário</option>
+                </select>
+
+                <!--
                 <input
                   type="url"
                   placeholder="Nome do voluntário"
                   class="form-control"
                   id="txtVolunteer"
                 />
+                -->
               </div>
               <div class="row">
                 <div class="form-group col">
                   <label for="txtStartDate">Inicio</label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    id="txtStartDate"
-                  />
+                  <input type="date" class="form-control" id="txtStartDate" />
                 </div>
                 <div class="form-group col">
                   <label for="txtEndDate">Fim</label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    id="txtEndDate"
-                  />
+                  <input type="date" class="form-control" id="txtEndDate" />
                 </div>
 
                 <div class="form-group col">
@@ -185,13 +183,14 @@
             <div id="divTasks" class="container">
               <!-- Table -->
               <div class="table-responsive">
-                <div class="text-center bg-warning font-weight-bold">Lista de Tarefas</div>
+                <div class="text-center bg-warning font-weight-bold">
+                  Lista de Tarefas
+                </div>
                 <table id="tblTasks" class="table table-sm">
                   <!-- conteúdo definido através de javascript-->
                 </table>
               </div>
             </div>
-
           </div>
         </div>
         <!-- /.container-fluid -->
