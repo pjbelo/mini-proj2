@@ -23,12 +23,12 @@ window.onload = () => {
     let response;
     if (isNew) {
       // Adiciona Membro
-      response = await fetch(`${urlBase}/ccmembers`, {
+      response = await fetch(`${urlBase}/conferences/1/ccmembers`, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         method: "POST",
-        body: `nome=${txtName}&cargo=${txtJob}&foto=${txtPhoto}&facebook=${txtFacebook}&twitter=${txtTwitter}&linkedin=${txtLinkedin}&bio=${txtBio}&active=1`,
+        body: `name=${txtName}&job=${txtJob}&photo=${txtPhoto}&facebook=${txtFacebook}&twitter=${txtTwitter}&linkedin=${txtLinkedin}&bio=${txtBio}`,
       });
       const newCcmemberId = response.headers.get("Location");
       const newCcmember = await response.json();
@@ -43,17 +43,20 @@ window.onload = () => {
       const newCcmember2 = await response2.json();
     } else {
       // Atualiza Membro
+      console.log(txtCcmemberId);
       response = await fetch(`${urlBase}/ccmembers/${txtCcmemberId}`, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         method: "PUT",
-        body: `nome=${txtName}&cargo=${txtJob}&foto=${txtPhoto}&facebook=${txtFacebook}&twitter=${txtTwitter}&linkedin=${txtLinkedin}&bio=${txtBio}&active=1`,
+        body: `name=${txtName}&job=${txtJob}&photo=${txtPhoto}&facebook=${txtFacebook}&twitter=${txtTwitter}&linkedin=${txtLinkedin}&bio=${txtBio}`,
       });
 
       const newCcmember = await response.json();
     }
     isNew = true;
+    document.getElementById("btn_submit").innerText =
+    "Criar Membro";
     renderCcmembers();
   });
 
@@ -72,9 +75,10 @@ window.onload = () => {
         `;
 
     // para ligar ao backoffice
-    // const response = await fetch(`${urlBase}/conferences/1/ccmembers`);
-    // const ccmembers = await response.json();
+    const response = await fetch(`${urlBase}/conferences/1/ccmembers`);
+    const ccmembers = await response.json();
 
+    /*
     const ccmembers = [
       {
         idCcmember: 1,
@@ -97,17 +101,18 @@ window.onload = () => {
         bio: "Hakuna Matata",
       },
     ];
+    */
 
     let i = 1;
     for (const ccmember of ccmembers) {
       strHtml += `
                 <tr>
                     <td>${i}</td>
-                    <td>${ccmember.nome}</td>
-                    <td>${ccmember.cargo}</td>
+                    <td>${ccmember.name}</td>
+                    <td>${ccmember.job}</td>
                     <td class="text-center">
-                        <i id='${ccmember.idCcmember}' class='fas fa-edit edit'></i> | 
-                        <i id='${ccmember.idCcmember}' class='fas fa-trash-alt remove'></i>
+                        <i id='${ccmember.ccmember_id}' class='fas fa-edit edit'></i> | 
+                        <i id='${ccmember.ccmember_id}' class='fas fa-trash-alt remove'></i>
                     </td>
                 </tr>
             `;
@@ -121,14 +126,15 @@ window.onload = () => {
     for (let i = 0; i < btnEdit.length; i++) {
       btnEdit[i].addEventListener("click", () => {
         isNew = false;
-
+        document.getElementById("btn_submit").innerText =
+          "Atualizar Membro";
         for (const ccmember of ccmembers) {
-          if (ccmember.idCcmember == btnEdit[i].getAttribute("id")) {
+          if (ccmember.ccmember_id == btnEdit[i].getAttribute("id")) {
             document.getElementById("txtCcmemberId").value =
-              ccmember.idCcmember;
-            document.getElementById("txtName").value = ccmember.nome;
-            document.getElementById("txtJob").value = ccmember.cargo;
-            document.getElementById("txtPhoto").value = ccmember.foto;
+              ccmember.ccmember_id;
+            document.getElementById("txtName").value = ccmember.name;
+            document.getElementById("txtJob").value = ccmember.job;
+            document.getElementById("txtPhoto").value = ccmember.photo;
             document.getElementById("txtFacebook").value = ccmember.facebook;
             document.getElementById("txtTwitter").value = ccmember.twitter;
             document.getElementById("txtLinkedin").value = ccmember.linkedin;

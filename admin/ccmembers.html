@@ -94,9 +94,9 @@
               Gestão de Membros da Comissão Científica na WebConference
             </p>
             <hr class="my-2" />
+
             <form id="frmCcmember">
               <input type="hidden" id="txtCcmemberId" />
-
               <div class="row">
                 <div class="form-group col">
                   <label for="inputName">Nome</label>
@@ -124,11 +124,10 @@
                 <label for="inputPhoto">Foto</label>
                 <input
                   type="url"
-                  placeholder="foto"
+                  placeholder="http://www.pics.com/mypic"
                   class="form-control"
-                  value="http://xxx.pt"
+                  value=""
                   id="txtPhoto"
-                  required
                 />
               </div>
               <div class="row">
@@ -174,8 +173,8 @@
               <!-- Buttons-->
               <div class="form-row">
                 <div class="form-group col-md-12">
-                  <button type="submit" class="btn btn-primary mb-2">
-                    Guardar Orador
+                  <button id="btn_submit" type="submit" class="btn btn-primary mb-2">
+                    Criar Membro
                   </button>
                   <button type="reset" class="btn btn-primary mb-2">
                     Limpar valores
