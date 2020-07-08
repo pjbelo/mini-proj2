@@ -30,7 +30,8 @@ window.onload = () => {
   readVolunteers().catch((e) => {
     console.log("There has been a problem reading volunteers: " + e.message);
   });
-
+  readVolunteers();
+  console.log(volunteers);
 
   frmTask.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -121,7 +122,7 @@ window.onload = () => {
     for (const task of tasks) {
       volunteer = volunteers.find(el => el.volunteer_id == task.volunteer_id);
       volunteer_name = volunteer ? volunteer.name : "";
-      start_date = task.startDate ? task.startDate : ""
+      start_date = task.startDate ? task.startDate : "";
       strHtml += `
                 <tr>
                     <td>${i}</td>
