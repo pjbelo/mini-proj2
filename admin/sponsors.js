@@ -1,6 +1,6 @@
 const urlProd = "https://mini-proj3-pjbelo.herokuapp.com";
 const urlDev = "http://localhost:8080";
-const urlBase = urlDev;
+const urlBase = urlProd;
 let isNew = true;
 
 // DB tables
