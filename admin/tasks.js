@@ -2,7 +2,6 @@ const urlProd = "https://mini-proj3-pjbelo.herokuapp.com";
 const urlDev = "http://localhost:8080";
 const urlBase = urlProd;
 let isNew = true;
-let volunteers;
 
 // DB table
 // tasks: task_id, conference_id, taskname, status, volunteer_id, start_date, end_date, duration, description
@@ -14,7 +13,7 @@ window.onload = () => {
 
   async function readVolunteers() {
     const response = await fetch(`${urlBase}/conferences/1/volunteers`);
-    volunteers = await response.json();
+    const volunteers = await response.json();
     // populate sel_volunteer select input
     var ele = document.getElementById("txtVolunteer");
     for (const volunteer of volunteers) {
@@ -26,12 +25,8 @@ window.onload = () => {
         volunteer.name +
         "</option>";
     }
+    return volunteers;
   }
-  readVolunteers().catch((e) => {
-    console.log("There has been a problem reading volunteers: " + e.message);
-  });
-  readVolunteers();
-  console.log(volunteers);
 
   frmTask.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -90,6 +85,7 @@ window.onload = () => {
     // para ligar ao backoffice
     const response = await fetch(`${urlBase}/conferences/1/tasks`);
     const tasks = await response.json();
+    const volunteers = await readVolunteers();
 
     /*
     const tasks = [
