@@ -11,23 +11,6 @@ window.onload = () => {
   const tblTasks = document.getElementById("tblTasks");
   const frmTask = document.getElementById("frmTask");
 
-  async function readVolunteers() {
-    const response = await fetch(`${urlBase}/conferences/1/volunteers`);
-    const volunteers = await response.json();
-    // populate sel_volunteer select input
-    var ele = document.getElementById("txtVolunteer");
-    for (const volunteer of volunteers) {
-      ele.innerHTML =
-        ele.innerHTML +
-        '<option value="' +
-        volunteer.volunteer_id +
-        '">' +
-        volunteer.name +
-        "</option>";
-    }
-    return volunteers;
-  }
-
   frmTask.addEventListener("submit", async (event) => {
     event.preventDefault();
     const txtTask = document.getElementById("txtTask").value;
@@ -85,7 +68,21 @@ window.onload = () => {
     // para ligar ao backoffice
     const response = await fetch(`${urlBase}/conferences/1/tasks`);
     const tasks = await response.json();
-    const volunteers = await readVolunteers();
+    //read volunteers
+    const response2 = await fetch(`${urlBase}/conferences/1/volunteers`);
+    const volunteers = await response2.json();
+    // populate sel_volunteer select input
+    var ele = document.getElementById("txtVolunteer");
+    for (const volunteer of volunteers) {
+      ele.innerHTML =
+        ele.innerHTML +
+        '<option value="' +
+        volunteer.volunteer_id +
+        '">' +
+        volunteer.name +
+        "</option>";
+    }
+
 
     /*
     const tasks = [
