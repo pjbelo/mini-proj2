@@ -1,8 +1,8 @@
 const urlProd = "https://mini-proj3-pjbelo.herokuapp.com";
 const urlDev = "http://localhost:8080";
 const urlBase = urlDev;
-let selectedVolunteerID;
 let isNew = true;
+let volunteers;
 
 // DB table
 // tasks: task_id, conference_id, taskname, status, volunteer_id, start_date, end_date, duration, description
@@ -14,7 +14,7 @@ window.onload = () => {
 
   async function readVolunteers() {
     const response = await fetch(`${urlBase}/conferences/1/volunteers`);
-    const volunteers = await response.json();
+    volunteers = await response.json();
     // populate sel_volunteer select input
     var ele = document.getElementById("txtVolunteer");
     for (const volunteer of volunteers) {
@@ -31,22 +31,11 @@ window.onload = () => {
     console.log("There has been a problem reading volunteers: " + e.message);
   });
 
-  console.log("isNew:", isNew);
-
-  /*
-  const txtVolunteerEl = document.getElementById("sel_volunteer");
-  function readSelectedVolunteer() {
-    selectedVolunteerID = txtVolunteerEl.value;
-    console.log(selectedVolunteerID);
-  }
-
-  txtVolunteerEl.addEventListener("onchange", readSelectedVolunteer);
-  */
 
   frmTask.addEventListener("submit", async (event) => {
     event.preventDefault();
     const txtTask = document.getElementById("txtTask").value;
-    const txtStatus = document.getElementById("txtStatus").innertText;
+    const txtStatus = document.getElementById("txtStatus").value;
     const txtVolunteer = document.getElementById("txtVolunteer").value;
     const txtStartDate = document.getElementById("txtStartDate").value;
     const txtEndDate = document.getElementById("txtEndDate").value;
@@ -63,7 +52,7 @@ window.onload = () => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         method: "POST",
-        body: `task_name=${txtTask}&status=${txtStatus}&volunteer=${txtVolunteer}&startDate=${txtStartDate}&endDate=${txtEndDate}&duration=${txtDuration}&description=${txtDescription}`,
+        body: `task_name=${txtTask}&status=${txtStatus}&volunteer_id=${txtVolunteer}&start_date=${txtStartDate}&end_date=${txtEndDate}&duration=${txtDuration}&description=${txtDescription}`,
       });
     } else {
       // Atualiza Membro
@@ -72,7 +61,7 @@ window.onload = () => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         method: "PUT",
-        body: `task_name=${txtTask}&status=${txtStatus}&volunteer=${txtVolunteer}&startDate=${txtStartDate}&endDate=${txtEndDate}&duration=${txtDuration}&description=${txtDescription}`,
+        body: `task_name=${txtTask}&status=${txtStatus}&volunteer_id=${txtVolunteer}&start_date=${txtStartDate}&end_date=${txtEndDate}&duration=${txtDuration}&description=${txtDescription}`,
       });
 
       const newTask = await response.json();
@@ -127,13 +116,18 @@ window.onload = () => {
     */
 
     let i = 1;
+    let volunteer;
+    let volunteer_name;
     for (const task of tasks) {
+      volunteer = volunteers.find(el => el.volunteer_id == task.volunteer_id);
+      volunteer_name = volunteer ? volunteer.name : "";
+      start_date = task.startDate ? task.startDate : ""
       strHtml += `
                 <tr>
                     <td>${i}</td>
                     <td>${task.task_name}</td>
-                    <td>${task.volunteer}</td>
-                    <td>${task.startDate}</td>
+                    <td>${volunteer_name}</td>
+                    <td>${start_date}</td>
                     <td>${task.status}</td>
                     <td class="text-center">
                         <i id='${task.task_id}' class='fas fa-edit edit'></i> |
@@ -157,7 +151,7 @@ window.onload = () => {
             document.getElementById("txtTaskId").value = task.task_id;
             document.getElementById("txtTask").value = task.task_name;
             document.getElementById("txtStatus").value = task.status;
-            document.getElementById("txtVolunteer").value = task.volunteer;
+            document.getElementById("txtVolunteer").value = task.volunteer_id;
             document.getElementById("txtStartDate").value = task.startDate;
             document.getElementById("txtEndDate").value = task.endDate;
             document.getElementById("txtDuration").value = task.duration;
